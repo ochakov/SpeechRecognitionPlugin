@@ -288,10 +288,13 @@ public class SpeechRecognition extends CordovaPlugin {
         public void onError(int error) {
             Log.d(LOG_TAG, "error speech");
             fireErrorEvent(error);
-            if (listening) {
-                fireEvent("end");
+            // Ugly workaround for engine sending ERROR_NO_MATCH on starting recognition
+            if (error != 7) {
+               if (listening) {
+                   fireEvent("end");
+               }
+               listening = false;
             }
-            listening = false;
         }
 
         @Override
@@ -311,6 +314,7 @@ public class SpeechRecognition extends CordovaPlugin {
         @Override
         public void onReadyForSpeech(Bundle params) {
             Log.d(LOG_TAG, "ready for speech");
+            fireEvent("readyforspeech");
             listening = true;
         }
 
@@ -334,6 +338,7 @@ public class SpeechRecognition extends CordovaPlugin {
         @Override
         public void onRmsChanged(float rmsdB) {
             Log.d(LOG_TAG, "rms changed");
+            fireEvent("rms:" + rmsdB);
         }
         
     }
