@@ -260,6 +260,7 @@ public class SpeechRecognition extends CordovaPlugin {
             }
 
             event.put("type","error");
+            event.put("code",code);
             event.put("message",errorMessage);
         } catch (JSONException e) {
             // this will never happen
