@@ -28,6 +28,8 @@ var SpeechRecognition = function () {
     this.onerror = null;
     this.onstart = null;
     this.onend = null;
+    this.onready = null;
+    this.onrms = null;
 
     exec(function() {
         console.log("initialized");
@@ -59,6 +61,10 @@ SpeechRecognition.prototype.start = function() {
             that.onstart(event);
         } else if (event.type === "end" && typeof that.onend === "function") {
             that.onend(event);
+        } else if (event.type === "readyforspeech" && typeof that.onready === "function") {
+            that.onready(event);
+        } else if (event.type === "rms" && typeof that.onrms === "function") {
+            that.onrms(event);
         }
     };
     var errorCallback = function(err) {
@@ -67,7 +73,7 @@ SpeechRecognition.prototype.start = function() {
         }
     };
 
-    exec(successCallback, errorCallback, "SpeechRecognition", "start", [this.lang,this.interimResults]);
+    exec(successCallback, errorCallback, "SpeechRecognition", "start", [this.lang,this.interimResults,this.maxAlternatives,this.continuous]);
 };
 
 SpeechRecognition.prototype.stop = function() {
