@@ -162,7 +162,7 @@ public class SpeechRecognition extends CordovaPlugin {
                 JSONArray alternatives = new JSONArray();
                 JSONObject result = new JSONObject();
                 result.put("transcript", transcripts.get(i));
-                result.put("final", true);
+                result.put("isfinal", true);
                 if (confidences != null) {
                     result.put("confidence", confidences[i]);
                 }
@@ -190,7 +190,7 @@ public class SpeechRecognition extends CordovaPlugin {
                 JSONObject result = new JSONObject();
                 result.put("transcript", transcripts.get(i));
 								Log.d(LOG_TAG,"partial - " + transcripts.get(i));
-                result.put("final", false);
+                result.put("isfinal", false);
                 alternatives.put(result);
                 results.put(alternatives);
             }
