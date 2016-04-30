@@ -80,7 +80,9 @@ public class SpeechRecognition extends CordovaPlugin {
             }
             
             String lang = args.optString(0, "en");
-						boolean interimResults = args.optBoolean(1);
+	    boolean interimResults = args.optBoolean(1);
+	    int maxResults = args.optInt(2);
+	    boolean continuous = args.optBoolean(3);
 
             this.speechRecognizerCallbackContext = callbackContext;
 
@@ -91,8 +93,8 @@ public class SpeechRecognition extends CordovaPlugin {
             intent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS,interimResults);
             // intent.putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true);
 
-            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,5); 
-            
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,maxResults);
+
             Handler loopHandler = new Handler(Looper.getMainLooper());
             loopHandler.post(new Runnable() {
 
@@ -205,9 +207,16 @@ public class SpeechRecognition extends CordovaPlugin {
     }
 
     private void fireEvent(String type) {
+    	fireEvent(type, null);
+    }
+
+    private void fireEvent(String type, Object value) {
         JSONObject event = new JSONObject();
         try {
             event.put("type",type);
+            if (value != null) {
+            	event.put("value",value);
+            }
         } catch (JSONException e) {
             // this will never happen
         }
@@ -339,7 +348,7 @@ public class SpeechRecognition extends CordovaPlugin {
         @Override
         public void onRmsChanged(float rmsdB) {
             Log.d(LOG_TAG, "rms changed");
-            fireEvent("rms:" + rmsdB);
+            fireEvent("rms", new Float(rmsdB));
         }
         
     }
