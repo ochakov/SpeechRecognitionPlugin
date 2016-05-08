@@ -24,7 +24,37 @@
 - (void) start:(CDVInvokedUrlCommand*)command {
     
     self.command = command;
-    NSString * lang = [command argumentAtIndex:0];
+    
+#ifndef __IPHONE_7_0
+    typedef void (^PermissionBlock)(BOOL granted);
+#endif
+    
+    PermissionBlock permissionBlock = ^(BOOL granted) {
+        if (granted)
+        {
+            [self recognize];
+        }
+        else
+        {
+            // Warn no access to microphone
+        }
+    };
+    
+    // iOS7+
+    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
+    {
+        [[AVAudioSession sharedInstance] performSelector:@selector(requestRecordPermission:)
+                                              withObject:permissionBlock];
+    }
+    else
+    {
+        [self recognize];
+    }
+}
+
+- (void)recognize {
+
+    NSString * lang = [self.command argumentAtIndex:0];
     NSMutableDictionary * event = [[NSMutableDictionary alloc]init];
     [event setValue:@"start" forKey:@"type"];
     self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:event];
@@ -103,7 +133,6 @@
 
     AVAudioSessionRecordPermission permission = [[AVAudioSession sharedInstance] recordPermission];
     return (permission == AVAudioSessionRecordPermissionGranted);
-
 }
 
 @end
