@@ -30,14 +30,7 @@
 #endif
     
     PermissionBlock permissionBlock = ^(BOOL granted) {
-        if (granted)
-        {
-            [self recognize];
-        }
-        else
-        {
-            // Warn no access to microphone
-        }
+        [self recognize];
     };
     
     // iOS7+
