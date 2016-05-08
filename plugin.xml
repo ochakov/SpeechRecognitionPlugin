@@ -49,6 +49,7 @@
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-feature android:name="android.hardware.microphone" android:required="false" />
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
         </config-file>
 
