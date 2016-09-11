@@ -100,7 +100,9 @@ public class SpeechRecognition extends CordovaPlugin {
 
                 @Override
                 public void run() {
-                    recognizer.startListening(intent);
+                    if (recognizer != null) {
+                        recognizer.startListening(intent);
+                    }
                 }
                 
             });
