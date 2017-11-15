@@ -4,8 +4,8 @@
 //
 
 #import "SpeechRecognition.h"
-#import "ISpeechSDK.h"
-#import <AVFoundation/AVAudioSession.h>
+#import "iSpeechSDK.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation SpeechRecognition
 
