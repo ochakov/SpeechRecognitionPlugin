@@ -5,21 +5,19 @@
   "cordova": {
     "id": "phonegap-plugin-speech-recognition",
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/macdonst/SpeechRecognitionPlugin.git"
+    "url": "git+https://github.com/ochakov/SpeechRecognitionPlugin.git"
   },
   "keywords": [
     "cordova",
     "speech",
     "recognition",
     "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios"
+    "cordova-android"
   ],
   "author": "Simon MacDonald",
   "license": "MIT",
